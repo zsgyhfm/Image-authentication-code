@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片验证码</title>
+    <style>
+        #code {
+            display: block;
+            margin: 100px auto;
+            width: 100px;
+            height: 30px;
+            background-color: #ffc0b4;
+        }
+    </style>
+</head>
+<body>
+<canvas id="code">
+    你的浏览器不支持 请升级
+</canvas>
+</body>
+<script>
+
+    var canvas = document.getElementById('code');
+    //canvas上下文
+    var context = canvas.getContext('2d');
+    var string = 'qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM1234567890';
+    //将字符串转成数组
+    var codes = string.split('');
+    //随机生成颜色
+    context.textBaseline = 'top';
+
+    canvas.addEventListener('click', function () {
+        var code = '';
+
+        //清空
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (var i = 0; i < 4; i++) {
+            var num = parseInt(Math.random() * string.length);
+            var char = codes[num];
+            //设定字体大小
+            var font_size = +(parseInt(Math.random() * 3) + 2) * 30;
+            context.font = font_size + 'px Arial';
+            //设置绘制颜色
+            //随机颜色
+            var R = parseInt(Math.random() * 255);
+            var G = parseInt(Math.random() * 255);
+            var B = parseInt(Math.random() * 255);
+            var color1 = 'rgba(' + R + ',' + G + ',' + B + ',' + Math.random().toFixed(1) + ')';
+            context.fillStyle = color1;
+            //绘制文字i+1*30
+            context.fillText(char, (i + 1) * 30, 20);
+
+            code += char
+        }
+
+    })
+</script>
+</html>
